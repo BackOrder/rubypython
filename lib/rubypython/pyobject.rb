@@ -172,7 +172,6 @@ class RubyPython::PyObject # :nodoc: all
   # and old style).
   def class?
     check = RubyPython::Macros.PyObject_TypeCheck(@pointer, [
-                                                  RubyPython::Python.PyClass_Type.to_ptr,
                                                   RubyPython::Python.PyType_Type.to_ptr
     ])
     check != 0
