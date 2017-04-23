@@ -141,7 +141,13 @@ class RubyPython::PyObject # :nodoc: all
   # Performs a compare on two Python objects. Returns a value similar to
   # that of the spaceship operator (<=>).
   def cmp(other)
-    RubyPython::Python.PyObject_Compare @pointer, other.pointer
+    return -1 if RubyPython::Python.PyObject_RichCompareBool(@pointer, other.pointer, RubyPython::Python.Py_LT)
+    
+    return 0 if RubyPython::Python.PyObject_RichCompareBool(@pointer, other.pointer, RubyPython::Python.Py_EQ)
+    
+    return 1 if RubyPython::Python.PyObject_RichCompareBool(@pointer, other.pointer, RubyPython::Python.Py_GT)
+
+    nil
   end
 
   # Tests whether the wrapped object is a function or a method. This is not
